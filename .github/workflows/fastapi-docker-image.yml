@@ -6,8 +6,12 @@ name: fastapi pipeline
 on:
   push:
     branches: ["main"]
+    paths:
+      - "fastapi/**"
   pull_request:
     branches: ["main"]
+    paths:
+      - "fastapi/**"
 
 permissions:
   contents: read
@@ -39,6 +43,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
+    if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v4
       - name: Docker Login

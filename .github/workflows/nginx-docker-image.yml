@@ -3,8 +3,12 @@ name: nginx pipeline
 on:
   push:
     branches: ["main"]
+    paths:
+      - "nginx/**"
   pull_request:
     branches: ["main"]
+    paths:
+      - "nginx/**"
 
 permissions:
   contents: read
@@ -12,6 +16,7 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
     steps:
       # 1. checkout
       - name: Checkout code

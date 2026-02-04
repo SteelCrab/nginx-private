@@ -10,7 +10,7 @@ WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 COPY --chown=nginx:nginx . .
 
-# 환경 변수 설정 (현대적인 key=value 형식)
+# 환경 변수 설정
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
 
