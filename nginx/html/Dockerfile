@@ -8,7 +8,7 @@ WORKDIR /usr/share/nginx/html
 
 # 기존 파일 삭제 및 html 폴더 내용 복사
 RUN rm -rf ./*
-COPY --chown=nginx:nginx html/ .
+COPY --chown=nginx:nginx . .
 
 # 환경 변수 설정 (현대적인 key=value 형식)
 ENV LANG=C.UTF-8
