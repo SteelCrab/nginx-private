@@ -9,7 +9,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# 포트
+# 포트8000
 EXPOSE 8000
 
 # uvicorn으로 실행
