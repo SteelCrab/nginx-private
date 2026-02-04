@@ -1,16 +1,18 @@
-FROM python:3.14-alpine
+FROM nginx:alpine
 
-WORKDIR /app
+# 설정 파일 복사
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY default.conf /etc/nginx/conf.d/default.conf
 
-# 의존성 설치
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+WORKDIR /usr/share/nginx/html
 
-# 애플리케이션 복사
-COPY . .
+# 기존 파일 삭제 및 html 폴더 내용 복사
+RUN rm -rf ./*
+COPY --chown=nginx:nginx html/ .
 
-# 포트 노출
-EXPOSE 8000
+# 환경 변수 설정 (현대적인 key=value 형식)
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
 
-# uvicorn으로 실행
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
