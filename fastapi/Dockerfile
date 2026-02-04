@@ -6,10 +6,10 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 애플리케이션 복사
+
 COPY . .
 
-# 포트 노출
+# 포트8000
 EXPOSE 8000
 
 # uvicorn으로 실행

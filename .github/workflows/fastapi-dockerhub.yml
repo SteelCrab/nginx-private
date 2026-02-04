@@ -6,8 +6,12 @@ name: fastapi pipeline
 on:
   push:
     branches: ["main"]
+    paths:
+      - "fastapi/**"
   pull_request:
     branches: ["main"]
+    paths:
+      - "fastapi/**"
 
 permissions:
   contents: read
@@ -39,6 +43,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
+    if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v4
       - name: Docker Login
@@ -69,7 +74,7 @@ jobs:
       - name: Deploy to EC2 via SSM
         run: |
           aws ssm send-command \
-            --instance-ids "${{ secrets.EC2_INSTANCE_PISTA_FASTAPI_ID }}" \
+            --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
             --document-name "AWS-RunShellScript" \
             --comment "Deploying Nginx via SSM" \
             --parameters 'commands=[
